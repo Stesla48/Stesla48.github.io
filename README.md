@@ -35,6 +35,15 @@ Elle derlemek istersen: `BASE_PATH=/portfolio/ npm run build`.
 
 İçeriği değiştirmek için sadece `src/data.js` dosyasını düzenle; `main`'e her push siteyi yeniden yayınlar.
 
+## Profil fotoğrafı
+Kahraman bölümündeki altıgen, `public/profile.jpg` dosyasını yükler. Dosya yoksa veya açılmazsa yerine baş harflerden oluşan **SY** avatarı gelir (karanlık ve aydınlık temaya uyar).
+
+Kendi fotoğrafını koymak için:
+1. Fotoğrafı `public/profile.jpg` yoluna kaydet (varsa üzerine yaz). `main`'e push edince site güncellenir.
+2. Farklı bir dosya adı kullanacaksan `src/data.js` içindeki `profilePhoto` değerini değiştir. Yol `public/` klasörüne göredir; örneğin `public/ben.webp` için `export const profilePhoto = 'ben.webp'`.
+
+Stok veya üretilmiş bir kişi fotoğrafı ekleme. Yalnızca kendi fotoğrafını koy.
+
 ## Güvenlik önlemleri
 - Sıkı **Content-Security-Policy** meta etiketi (yalnızca üretim derlemesine eklenir):
   `default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'; upgrade-insecure-requests`

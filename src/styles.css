@@ -70,10 +70,33 @@ main, .footer { position: relative; z-index: 2; }
 .nav nav a:hover { color: var(--green); }
 .lang { background: transparent; border: 1px solid var(--border); color: var(--muted); font-family: var(--mono); font-size: 12px; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
 .lang .on { color: var(--green); font-weight: 700; }
+.theme-toggle { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; color: var(--green); }
+.theme-toggle:hover, .theme-toggle:focus-visible { color: var(--cyan); }
+.theme-icon { display: grid; place-items: center; line-height: 0; }
+.theme-toggle svg { display: block; }
 
 /* HERO */
 .hero { min-height: calc(100vh - 56px); min-height: calc(100svh - 56px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: center; gap: clamp(24px, 4vw, 64px); padding: 40px clamp(16px, 5vw, 72px); max-width: 1280px; margin: 0 auto; }
 .hero-term .term-body { min-height: 190px; }
+.avatar { width: clamp(108px, 22vw, 150px); aspect-ratio: 1; margin: 0 0 18px; filter: drop-shadow(0 0 12px var(--glow)); }
+.avatar-frame {
+  position: relative; width: 100%; height: 100%; display: grid; place-items: center; overflow: hidden;
+  clip-path: polygon(50% 0, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--green) 32%, var(--bg)), var(--bg) 58%, color-mix(in srgb, var(--cyan) 24%, var(--bg)));
+}
+.avatar-frame::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0 3px, var(--scan-line) 3px 4px);
+}
+.avatar-img { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+.avatar-img.is-loading { opacity: 0; }
+.avatar-initials { position: relative; z-index: 1; font-weight: 700; font-size: clamp(28px, 5vw, 42px); letter-spacing: 0.08em; color: var(--green); text-shadow: 0 0 14px var(--glow); }
+.avatar-scan {
+  position: absolute; left: 0; right: 0; top: 0; z-index: 3; height: 18%; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--green) 70%, transparent), transparent);
+  opacity: 0.45; animation: avatar-scan 3.8s linear infinite;
+}
+@keyframes avatar-scan { from { transform: translateY(-120%); } to { transform: translateY(560%); } }
 .typing .cmd { color: var(--green); }
 .typing .out { color: var(--cyan); padding-left: 2ch; }
 .cursor { display: inline-block; margin-left: 2px; color: var(--green); animation: blink 1s steps(1) infinite; }
@@ -188,6 +211,7 @@ li::before { content: "▹"; position: absolute; left: 0; color: var(--green); }
   .nav { flex-wrap: wrap; gap: 8px 14px; }
   .nav nav { order: 3; width: 100%; margin-left: 0; gap: 14px; padding-bottom: 2px; }
   .nav-actions { margin-left: auto; }
+  .theme-toggle { width: 44px; height: 44px; }
   .term { backdrop-filter: none; background: color-mix(in srgb, var(--bg) 92%, var(--panel)); }
   .nav { backdrop-filter: none; background: color-mix(in srgb, var(--bg) 96%, transparent); }
 }
@@ -203,9 +227,11 @@ li::before { content: "▹"; position: absolute; left: 0; color: var(--green); }
 .app.low .name.glitch::before, .app.low .name.glitch::after { animation-duration: 7s; }
 .app.low .scanlines { background: radial-gradient(ellipse at center, transparent 45%, var(--scan-vig) 100%); }
 .app.low .matrix { opacity: calc(var(--matrix-opacity) * 0.82); }
+.app.low .avatar-scan { animation-duration: 7.5s; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .glitch::before, .glitch::after, .cursor { animation: none !important; opacity: 0; }
+  .glitch::before, .glitch::after, .cursor, .avatar-scan { animation: none !important; }
+  .glitch::before, .glitch::after, .avatar-scan { opacity: 0; }
   .cursor { opacity: 1; }
 }

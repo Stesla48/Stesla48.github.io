@@ -7,6 +7,8 @@ import TerminalWindow from './components/TerminalWindow.jsx'
 import InteractiveTerminal from './components/InteractiveTerminal.jsx'
 import ProjectCard from './components/ProjectCard.jsx'
 import Confetti from './components/Confetti.jsx'
+import Avatar from './components/Avatar.jsx'
+import ThemeToggle from './components/ThemeToggle.jsx'
 import { links, projects, experience, skills, t } from './data.js'
 import { getPerfProfile } from './perf.js'
 import { applyLang, applyTheme, readLang, readTheme } from './theme.js'
@@ -70,15 +72,11 @@ export default function App() {
             {IDS.map((id, i) => <a key={id} href={`#${id}`}>{L.nav[i]}</a>)}
           </nav>
           <div className="nav-actions">
-            <button
-              type="button"
-              className="lang"
-              aria-pressed={theme === 'light'}
-              aria-label={theme === 'light' ? L.themeToDark : L.themeToLight}
+            <ThemeToggle
+              theme={theme}
+              label={theme === 'light' ? L.themeToDark : L.themeToLight}
               onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            >
-              {theme === 'light' ? L.themeDark : L.themeLight}
-            </button>
+            />
             <button type="button" className="lang" onClick={() => setLang(lang === 'en' ? 'tr' : 'en')} aria-label="toggle language">
               <span className={lang === 'en' ? 'on' : ''}>EN</span>/<span className={lang === 'tr' ? 'on' : ''}>TR</span>
             </button>
@@ -101,6 +99,7 @@ export default function App() {
               animate={typed ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
+              <Avatar alt={L.photoAlt} />
               <Glitch as="h1" className="name" text="Selim YAĞLIOĞLU" />
               <p className="role">{L.role}</p>
               <p className="tagline">{L.tagline}</p>

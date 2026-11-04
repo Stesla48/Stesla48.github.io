@@ -1,4 +1,8 @@
 // All facts below come from Selim's CV files (cv.docx + EN translation).
+// File under public/. Missing or failed loads fall back to the SY avatar.
+// Örnek: 'profile.jpg' → public/profile.jpg
+export const profilePhoto = 'profile.jpg'
+
 export const links = {
   email: 'selimyaglioglu@hotmail.com',
   linkedin: 'https://www.linkedin.com/in/selimyaglioglu',
@@ -98,7 +102,7 @@ export const t = {
     contactBody: 'Open to junior cybersecurity and software engineering roles — remote or in Turkey. Fastest way to reach me:',
     termHint: 'type "help" and press Enter', footer: 'Built with React + Framer Motion · hosted on GitHub Pages',
     themeToLight: 'Switch to light mode', themeToDark: 'Switch to dark mode',
-    themeLight: 'light', themeDark: 'dark',
+    photoAlt: 'Profile photo of Selim YAĞLIOĞLU',
     details: '// details',
     egg: 'Access granted. Welcome, recruiter.',
   },
@@ -122,8 +126,8 @@ export const t = {
     skillsTitle: 'yetenekler', contactTitle: 'iletişim',
     contactBody: 'Junior siber güvenlik ve yazılım mühendisliği pozisyonlarına açığım — uzaktan veya Türkiye\u2019de. Bana ulaşmanın en hızlı yolu:',
     termHint: '"help" yazıp Enter\u2019a bas', footer: 'React + Framer Motion ile yapıldı · GitHub Pages üzerinde',
-    themeToLight: 'Aydınlık temaya geç', themeToDark: 'Karanlık temaya geç',
-    themeLight: 'aydınlık', themeDark: 'karanlık',
+    themeToLight: 'Gündüz moduna geç', themeToDark: 'Gece moduna geç',
+    photoAlt: 'Selim YAĞLIOĞLU profil fotoğrafı',
     details: '// detay',
     egg: 'Erişim sağlandı. Hoş geldin, recruiter.',
   },
