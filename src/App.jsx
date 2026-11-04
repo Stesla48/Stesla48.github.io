@@ -1,12 +1,15 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, MotionConfig } from 'framer-motion'
 import MatrixRain from './components/MatrixRain.jsx'
 import Glitch from './components/Glitch.jsx'
 import Typing from './components/Typing.jsx'
 import TerminalWindow from './components/TerminalWindow.jsx'
 import InteractiveTerminal from './components/InteractiveTerminal.jsx'
+import ProjectCard from './components/ProjectCard.jsx'
+import Confetti from './components/Confetti.jsx'
 import { links, projects, experience, skills, t } from './data.js'
 import { getPerfProfile } from './perf.js'
+import { applyLang, applyTheme, readLang, readTheme } from './theme.js'
 
 const EXT = { target: '_blank', rel: 'noopener noreferrer' }
 const IDS = ['about', 'projects', 'experience', 'certs', 'skills', 'contact']
@@ -28,26 +31,58 @@ function Section({ id, title, children }) {
   )
 }
 
+function EggFlash({ message, low, reduced }) {
+  const [on, setOn] = useState(true)
+  useEffect(() => {
+    const timer = setTimeout(() => setOn(false), 2600)
+    return () => clearTimeout(timer)
+  }, [])
+  if (!on) return null
+  return (
+    <>
+      {!reduced && <Confetti active low={low} />}
+      <div className="egg-banner" role="status">{message}</div>
+    </>
+  )
+}
+
 export default function App() {
-  const [lang, setLang] = useState('en')
+  const [lang, setLang] = useState(readLang)
+  const [theme, setTheme] = useState(readTheme)
   const [typed, setTyped] = useState(false)
+  const [egg, setEgg] = useState(0)
   const perf = useMemo(() => getPerfProfile(), [])
   const L = t[lang]
+
+  useEffect(() => { applyTheme(theme) }, [theme])
+  useEffect(() => { applyLang(lang) }, [lang])
 
   return (
     <MotionConfig reducedMotion="user" transition={perf.low ? { duration: 0.3 } : undefined}>
       <div className={`app ${perf.low ? 'low' : ''}`}>
-        <MatrixRain />
+        <MatrixRain theme={theme} burst={egg} />
         <div className="scanlines" aria-hidden="true" />
+        {egg > 0 && <EggFlash key={egg} message={L.egg} low={perf.low} reduced={perf.reduced} />}
 
         <header className="nav">
           <a href="#top" className="brand">&gt;_ selim</a>
           <nav aria-label="sections">
             {IDS.map((id, i) => <a key={id} href={`#${id}`}>{L.nav[i]}</a>)}
           </nav>
-          <button className="lang" onClick={() => setLang(lang === 'en' ? 'tr' : 'en')} aria-label="toggle language">
-            <span className={lang === 'en' ? 'on' : ''}>EN</span>/<span className={lang === 'tr' ? 'on' : ''}>TR</span>
-          </button>
+          <div className="nav-actions">
+            <button
+              type="button"
+              className="lang"
+              aria-pressed={theme === 'light'}
+              aria-label={theme === 'light' ? L.themeToDark : L.themeToLight}
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            >
+              {theme === 'light' ? L.themeDark : L.themeLight}
+            </button>
+            <button type="button" className="lang" onClick={() => setLang(lang === 'en' ? 'tr' : 'en')} aria-label="toggle language">
+              <span className={lang === 'en' ? 'on' : ''}>EN</span>/<span className={lang === 'tr' ? 'on' : ''}>TR</span>
+            </button>
+          </div>
         </header>
 
         <main id="top">
@@ -100,12 +135,7 @@ export default function App() {
           <Section id="projects" title={L.projectsTitle}>
             <div className="grid-3">
               {projects.map((p, i) => (
-                <TerminalWindow key={p.name} title={`~/projects/${String(i + 1).padStart(2, '0')}`} delay={(i % 3) * 0.08} className="project">
-                  <h3 className="p-name">{p.name}</h3>
-                  <p className="p-desc">{p[lang]}</p>
-                  <div className="tags">{p.tech.map((x) => <span key={x} className="tag">{x}</span>)}</div>
-                  <a className="repo" href={p.url} {...EXT}>$ git clone → {L.viewRepo}</a>
-                </TerminalWindow>
+                <ProjectCard key={p.name} project={p} index={i} lang={lang} viewRepo={L.viewRepo} hint={L.details} low={perf.low} />
               ))}
             </div>
           </Section>
@@ -167,7 +197,7 @@ export default function App() {
                 </div>
               </TerminalWindow>
               <TerminalWindow title="guest@selim: ~ (interactive)" delay={0.1} hover={false}>
-                <InteractiveTerminal lang={lang} hint={L.termHint} />
+                <InteractiveTerminal lang={lang} hint={L.termHint} onEgg={() => setEgg((n) => n + 1)} />
               </TerminalWindow>
             </div>
           </Section>

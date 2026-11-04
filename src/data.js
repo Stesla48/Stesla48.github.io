@@ -97,6 +97,10 @@ export const t = {
     skillsTitle: 'skills', contactTitle: 'contact',
     contactBody: 'Open to junior cybersecurity and software engineering roles — remote or in Turkey. Fastest way to reach me:',
     termHint: 'type "help" and press Enter', footer: 'Built with React + Framer Motion · hosted on GitHub Pages',
+    themeToLight: 'Switch to light mode', themeToDark: 'Switch to dark mode',
+    themeLight: 'light', themeDark: 'dark',
+    details: '// details',
+    egg: 'Access granted. Welcome, recruiter.',
   },
   tr: {
     nav: ['hakkımda', 'projeler', 'deneyim', 'sertifika', 'yetenekler', 'iletişim'],
@@ -118,5 +122,9 @@ export const t = {
     skillsTitle: 'yetenekler', contactTitle: 'iletişim',
     contactBody: 'Junior siber güvenlik ve yazılım mühendisliği pozisyonlarına açığım — uzaktan veya Türkiye\u2019de. Bana ulaşmanın en hızlı yolu:',
     termHint: '"help" yazıp Enter\u2019a bas', footer: 'React + Framer Motion ile yapıldı · GitHub Pages üzerinde',
+    themeToLight: 'Aydınlık temaya geç', themeToDark: 'Karanlık temaya geç',
+    themeLight: 'aydınlık', themeDark: 'karanlık',
+    details: '// detay',
+    egg: 'Erişim sağlandı. Hoş geldin, recruiter.',
   },
 }

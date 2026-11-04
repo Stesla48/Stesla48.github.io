@@ -2,7 +2,7 @@
 
 Tek sayfalık, terminal temalı portfolyo sitesi: Matrix tarzı karakter yağmuru, glitch efektleri,
 yazı yazma animasyonu ve Framer Motion animasyonları. **Vite + React + Framer Motion**, tamamen statik,
-GitHub Pages'te ücretsiz yayınlanır. Tüm içerik CV'den alınmıştır (`src/data.js`). EN/TR dil geçişi vardır.
+GitHub Pages'te ücretsiz yayınlanır. Tüm içerik CV'den alınmıştır (`src/data.js`). Site Türkçe açılır; EN/TR düğmesi dili değiştirir ve seçim tarayıcıda hatırlanır.
 
 ## Yerelde çalıştırma
 ```bash
@@ -41,8 +41,9 @@ Elle derlemek istersen: `BASE_PATH=/portfolio/ npm run build`.
   — satır içi script yok, dış font/script/CDN yok (sistem monospace fontları kullanılır).
 - `referrer` politikası: `strict-origin-when-cross-origin`.
 - `dangerouslySetInnerHTML`, `eval` ve benzeri yok; tüm içerik düz React metni olarak basılır.
-- Etkileşimli terminal: yalnızca beyaz listedeki komutlar (`help, whoami, projects, skills, cert, contact, github, clear`),
+- Etkileşimli terminal: yalnızca beyaz listedeki komutlar (`help, whoami, projects, skills, cert, contact, github, clear, matrix`),
   girdi 32 karakterle sınırlı, sadece a–z harfleri tutulur, hiçbir zaman çalıştırılmaz/HTML olarak işlenmez.
+  `help` çıktısı `matrix` komutunu listelemez.
 - Backend, form, API anahtarı, token veya izleyici (analytics/tracker) yok; iletişim yalnızca `mailto:` ve linklerle.
 - Tüm dış linkler `target="_blank" rel="noopener noreferrer"`.
 - Bağımlılıklar en güncel kararlı sürümler; `npm audit` → 0 açık. CI'da da `npm audit` çalışır.

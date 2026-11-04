@@ -1,0 +1,5 @@
+# Pages is still set to "Deploy from a branch" because this token cannot
+# change the source to GitHub Actions. An unknown theme makes that branch
+# build fail so it does not replace the site published by the Actions workflow.
+# Delete this file after Settings → Pages → Source is GitHub Actions.
+theme: actions-deploy-only

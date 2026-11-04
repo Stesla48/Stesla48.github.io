@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { links, projects, skills } from '../data.js'
+import { links, projects, skills, t } from '../data.js'
 
 const MAX_LEN = 32
 const MAX_ENTRIES = 10
@@ -21,12 +21,14 @@ function run(cmd, lang) {
       return [links.email, links.linkedin]
     case 'github':
       return [links.github]
+    case 'matrix':
+      return [t[lang]?.egg || t.en.egg]
     default:
       return [`command not found: ${cmd} — try "help"`]
   }
 }
 
-export default function InteractiveTerminal({ lang, hint }) {
+export default function InteractiveTerminal({ lang, hint, onEgg }) {
   const [value, setValue] = useState('')
   const [history, setHistory] = useState([])
   const inputRef = useRef(null)
@@ -37,6 +39,7 @@ export default function InteractiveTerminal({ lang, hint }) {
     setValue('')
     if (!cmd) return
     if (cmd === 'clear') { setHistory([]); return }
+    if (cmd === 'matrix') onEgg?.()
     setHistory((h) => [...h, { cmd, out: run(cmd, lang) }].slice(-MAX_ENTRIES))
   }
 
